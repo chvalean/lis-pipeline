@@ -7,15 +7,7 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-- script: sudo apt -y install gcc
+- script: sudo export DEBIAN_FRONTEND=noninteractive ; apt install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --force-yes kernel-common
   displayName: 'Install tools'
 
 - script: pwd && ls
@@ -23,7 +15,5 @@ steps:
 
 - script: |
     pushd scripts/package_building
-    export DEBIAN_FRONTEND=noninteractive
-    apt install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --force-yes kernel-common
     bash build_artifacts.sh --git_url https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git --git_branch 'refs/tags/v4.18.7' --destination_path 567-master-upstream-kernel-artifacts --install_deps True --thread_number x3 --debian_os_version 16 --build_path build-folder --clean_env True --use_ccache False --use_kernel_folder_prefix True --create_changelog False --enable_kernel_debug False
   displayName: 'Compile kernel'
