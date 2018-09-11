@@ -8,8 +8,7 @@ pool:
 
 steps:
 - script: |
-    export DEBIAN_FRONTEND=noninteractive
-    sudo apt install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --force-yes kernel-common
+    sudo UCF_FORCE_CONFFNEW=YES DEBIAN_FRONTEND=noninteractive apt install -y --force-yes kernel-common
   displayName: 'Install tools'
 
 - script: |
