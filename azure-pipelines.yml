@@ -7,11 +7,10 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: sudo export DEBIAN_FRONTEND=noninteractive ; apt install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --force-yes kernel-common
+- script: |
+    export DEBIAN_FRONTEND=noninteractive
+    sudo apt install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --force-yes kernel-common
   displayName: 'Install tools'
-
-- script: pwd && ls
-  displayName: 'show folders'
 
 - script: |
     pushd scripts/package_building
