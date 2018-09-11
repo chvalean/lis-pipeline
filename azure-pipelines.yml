@@ -15,7 +15,7 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- script: apt -y install gcc
+- script: sudo apt -y install gcc
   displayName: 'Install tools'
 
 - script: pwd && ls
