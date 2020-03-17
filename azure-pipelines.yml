@@ -1,0 +1,17 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+steps:
+- script: |
+    sudo UCF_FORCE_CONFFNEW=YES DEBIAN_FRONTEND=noninteractive apt install -y --force-yes kernel-common
+  displayName: 'Install tools'
+
+- script: |
+    pushd scripts/package_building
+    bash build_artifacts.sh --git_url https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git --git_branch 'refs/tags/v4.18.7' --destination_path 567-master-upstream-kernel-artifacts --install_deps True --thread_number x3 --debian_os_version 16 --build_path build-folder --clean_env True --use_ccache False --use_kernel_folder_prefix True --create_changelog False --enable_kernel_debug False
+  displayName: 'Compile kernel'
